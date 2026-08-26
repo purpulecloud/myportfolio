@@ -1,0 +1,119 @@
+doctype html
+html(lang='en')
+
+  //- Variable block for page-specific info
+  block vars
+
+  head
+
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(charset='utf-8')
+    meta(name='viewport',content='width=device-width, initial-scale=1, minimum-scale=1')
+
+    meta(name='description', content=pageDescription)
+    meta(name='author', content='Karthikeya Rangala')
+
+    if bodyClass == 'home'
+      title Karthikeya Rangala
+    else
+      title #{pageTitle} | Karthikeya Rangala
+
+    link(rel='icon', href='/assets/images/favicon.png', sizes='any')
+    //- link(rel='icon', href='/assets/images/favicon.svg', type='image/svg+xml')
+
+
+    //- check light/dark mode (default to light)
+    script(type='text/javascript').
+      var saved = localStorage.getItem("user-color-scheme");
+      if (saved !== null) {
+        document.documentElement.setAttribute("data-user-color-scheme", saved);
+      } else {
+        document.documentElement.setAttribute("data-user-color-scheme", 'light');
+      }
+
+    link(href='/assets/fonts/Hubano-Rough.woff2', rel='preload', as='font', type='font/woff2', crossorigin)
+    link(rel='stylesheet', href='/assets/css/main.css')
+
+    block styles
+
+    if bodyClass !== 'utility'
+      meta(property='og:type',  content='website')
+      meta(content=pageDescription, property='og:description')
+      if bodyClass == 'thought-detail'
+        meta(content='https://lynnandtonic.com/thoughts/entries/' + pagePath, property='og:url')
+        meta(content=pageTitle, property='og:title')
+      else if bodyClass == 'home'
+        meta(content='https://lynnandtonic.com', property='og:url')
+        meta(content='Lynn Fisher', property='og:title')
+      else
+        meta(content='https://lynnandtonic.com/' + pagePath, property='og:url')
+        meta(content=pageTitle, property='og:title')
+      if ogImage
+        meta(content='https://lynnandtonic.com/assets/images/OG/' + ogImage + '.jpg', property='og:image')
+      else
+        meta(content='https://lynnandtonic.com/assets/images/OG/vXIX.jpg', property='og:image')
+
+  body.no-js(class=bodyClass)
+
+    if bodyClass !== 'home'
+      a.skip-link(href='#nav') Jump to navigation
+
+    .app
+      header.header-main(class=bodyClass)
+        .container
+          if bodyClass == 'thought-detail'
+            if replaceTitle
+              h1#content= replaceTitle
+            else
+              .date
+                small= date
+              h1#content= pageTitle
+          else
+            block header
+
+      if bodyClass == 'gifs'
+        block content
+      else
+        main#content
+          if bodyClass == 'thought-detail'
+            .container
+              .content
+                block content
+              nav.thoughts-nav
+                div.later
+                  if (typeof(later) !== 'undefined')
+                    span ←
+                    a.later(href='/thoughts/entries/' + later) Newer
+                div.back
+                  a(href='/thoughts') All
+                div.earlier
+                  if (typeof(earlier) !== 'undefined')
+                    a.earlier(href='/thoughts/entries/' + earlier) Older
+                    span →
+          else
+            block content
+
+
+      if bodyClass !== 'home'
+        footer.main-footer(class=bodyClass)
+          .footer-links
+            nav.links
+              a(href='mailto:karthikeya.rangala@gmail.com') Email
+              a(href='https://www.linkedin.com/in/r-karthikeya-7a4520354') LinkedIn
+              a(href='https://github.com/purpulecloud') GitHub
+            nav.icons
+              a.icon.github(href='https://github.com/purpulecloud', title='follow my projects on GitHub')
+                include ../_assets/images/social-github.svg
+              a.icon.linkedin(href='https://www.linkedin.com/in/r-karthikeya-7a4520354', title='connect on LinkedIn')
+                | LinkedIn
+
+          //- .archive
+          //-   span Archives: #[a(href='https://twitter.lynnandtonic.com') Twitter], #[a(href='https://instagram.lynnandtonic.com/') Instagram]
+
+          include includes/main-nav
+
+    script(src='/js/main.min.js')
+    block scripts
+    script(src='/assets/js/karthik-chat.js')
+    script(data-goatcounter='https://lynnandtonic.goatcounter.com/count'
+        async src='//gc.zgo.at/count.js')

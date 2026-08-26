@@ -1,0 +1,32 @@
+extends _layout
+
+block vars
+  - var pageTitle = 'Education'
+  - var pageDescription = 'Academic background'
+  - var pagePath = 'education'
+  - var bodyClass = 'education'
+
+block header
+  p.chapter III
+  h1#content Education
+
+block content
+  .container
+    .content
+      p Hello — these are my education highlights.
+
+      ul.edu-list
+        li.edu-item
+          h3 ASE, Coimbatore
+          small.issuer B.Tech · Computer Science and Engineering - Artificial Intelligence
+          p Year: 2027 • CGPA - 6.87/10
+
+        li.edu-item
+          h3 Narayana College
+          small.issuer Class XII - SSC (State Board of Telangana) · MPC · Hyderabad
+          p Year: 2023 • Percentage - 94%
+
+        li.edu-item
+          h3 Narayana Olympiad School
+          small.issuer Class X - State Board · MPC · Hyderabad
+          p Year: 2020 • Percentage - 100%
